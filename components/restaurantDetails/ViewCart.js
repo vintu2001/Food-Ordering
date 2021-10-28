@@ -35,6 +35,7 @@ const ViewCart = ({ navigation }) => {
         items: items,
         restaurantName: restaurantName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        orderedBy: firebase.auth().currentUser.email,
       })
       .then(() =>
         setTimeout(() => {
@@ -44,7 +45,7 @@ const ViewCart = ({ navigation }) => {
       );
   };
 
-  console.log(totalUSD);
+  console.log(totalUSD.replace("US", ""));
 
   const checkerModalContent = () => {
     return (
@@ -59,7 +60,7 @@ const ViewCart = ({ navigation }) => {
             </ScrollView>
             <View style={styles.subtotalContainer}>
               <Text>Subtotal</Text>
-              <Text>{totalUSD}</Text>
+              <Text>{totalUSD.replace("US", "")}</Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <TouchableOpacity
@@ -87,7 +88,7 @@ const ViewCart = ({ navigation }) => {
                     top: 17,
                   }}
                 >
-                  {total ? totalUSD : ""}
+                  {total ? totalUSD.replace("US", "") : ""}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -130,9 +131,10 @@ const ViewCart = ({ navigation }) => {
                 marginTop: 20,
                 backgroundColor: "green",
                 flexDirection: "row",
-                alignItems: "center",
+                alignItems: "baseline",
                 justifyContent: "flex-end",
                 padding: 10,
+                // paddingHorizontal: 20,
                 borderRadius: 30,
                 position: "relative",
                 width: 180,
@@ -140,11 +142,18 @@ const ViewCart = ({ navigation }) => {
               activeOpacity={0.6}
               onPress={() => setModalVisible(true)}
             >
-              <Text style={{ color: "white", fontSize: 20, marginRight: 10 }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 22,
+                  marginRight: 15,
+                }}
+              >
                 View Cart
               </Text>
-              <Text style={{ color: "white", fontSize: 15, marginRight: 5 }}>
-                {totalUSD}
+
+              <Text style={{ color: "white", fontSize: 13 }}>
+                {totalUSD.replace("US", "")}
               </Text>
             </TouchableOpacity>
           </View>

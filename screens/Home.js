@@ -3,20 +3,17 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Divider } from "react-native-elements";
 
-import RestaurantItems, {
-  localRestaurants,
-} from "../components/home/RestaurantItems";
+import RestaurantItems from "../components/home/RestaurantItems";
 import BottomTabs from "../components/home/BottomTabs";
 import HeaderTabs from "../components/home/HeaderTabs";
 import SearchBar from "../components/home/SearchBar";
 import Categories from "../components/home/Categories";
-import ViewCart from "../components/restaurantDetails/ViewCart";
 
 const YELP_API_KEY =
   "HJqgIgMtcD4AcX-zvO5H39DB9q2feLZ_Wlx3KbOJX6jWP7AAJbZFnqZ8hXlesY-KQnise2T5Eh7n242WlrL4Vzm4zJDo4giypvI5Dix5Hhddl8dGniV0fiaT0E5OYXYx";
 
 const Home = ({ navigation }) => {
-  const [restaurantsData, setRestaurantsData] = useState(localRestaurants);
+  const [restaurantsData, setRestaurantsData] = useState([]);
   const [city, setCity] = useState("San Francisco");
   const [activeTab, setActiveTab] = useState("Delivery");
 

@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import LottieView from "lottie-react-native";
 import firebase from "../firebase";
 import MenuItems from "../components/restaurantDetails/MenuItems";
+import { useNavigation } from "@react-navigation/core";
 
 const OrderCompleted = () => {
   const [lastOrder, setLastOrder] = useState({
-    items: [
-      {
-        title: "Bologna",
-        description: "With butter lettuce, tomato and sauce bechamel",
-        price: "$13.50",
-        image:
-          "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
-      },
-    ],
+    items: [],
   });
   const { items, restaurantName } = useSelector(
     (state) => state.cartReducer.selectedItems
@@ -45,6 +38,8 @@ const OrderCompleted = () => {
     return () => unsubscribe();
   }, []);
 
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       {/* green checkmark */}
@@ -71,19 +66,45 @@ const OrderCompleted = () => {
             paddingBottom: 15,
           }}
         >
-          Your order at {restaurantName} has been placed for {totalUSD}
+          Your order at {restaurantName} has been placed for{" "}
+          {totalUSD.replace("US", "")}
         </Text>
         <ScrollView>
           <MenuItems foods={lastOrder.items} hideCheckbox={true} />
-
-          {/* cooking */}
-          <LottieView
-            style={{ width: 300, alignSelf: "center", marginBottom: 30 }}
-            source={require("../assets/animations/cooking.json")}
-            autoPlay
-            speed={0.5}
-          />
         </ScrollView>
+        {/* cooking */}
+        <LottieView
+          style={{
+            width: 250,
+            alignSelf: "center",
+            marginBottom: 50,
+            alignItems: "center",
+          }}
+          source={require("../assets/animations/cooking.json")}
+          autoPlay
+          speed={0.5}
+        />
+        <TouchableOpacity
+          style={{
+            backgroundColor: "black",
+            bottom: 30,
+            borderRadius: 30,
+            alignContent: "center",
+          }}
+          onPress={() => navigation.replace("Home")}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 20,
+              paddingHorizontal: 35,
+              paddingVertical: 15,
+              alignSelf: "center",
+            }}
+          >
+            Go To Home
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
